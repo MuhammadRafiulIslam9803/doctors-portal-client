@@ -13,6 +13,7 @@ module.exports = {
           // accent: "1db27f#",
           accent: "#0f4271",
           neutral: "#ff00ff",
+          // success: "#141212",
           "base-100": "#ffffff",
         },
       },
