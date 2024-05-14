@@ -4,6 +4,7 @@ import Banner from "../Pages/Home/Banner";
 import BookingHome from "../Pages/Booking/BookingHome";
 import Login from "../Pages/Authontication/Login";
 import Registration from "../Pages/Authontication/Registration";
+import DashboardHome from "../Pages/Dashboard/DashboardHome";
 
 const router = createBrowserRouter([
     {
@@ -26,7 +27,12 @@ const router = createBrowserRouter([
                path :"/signup",
                element : <Registration></Registration> 
             },
+            
         ]
+    },
+    {  
+         path :"/dashboard",
+         element : <DashboardHome></DashboardHome>
     },
 ])
 export default router;
