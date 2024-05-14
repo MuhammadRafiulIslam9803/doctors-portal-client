@@ -37,7 +37,7 @@ const Login = () => {
                         <label className="label"> <span className="label-text">Forget Password?</span></label>
                         {errors.password && <p className='text-red-600'>{errors.password?.message}</p>}
                     </div>
-                    <input className='btn btn-neutral rounded-lg w-full' value="Login" type="submit" />
+                    <input className='btn btn-neutral rounded-lg w-full text-xl mt-3 mb-2' value="Login" type="submit" />
                     {/* <div>
                         {loginError && <p className='text-red-600'>{loginError}</p>}
                     </div> */}

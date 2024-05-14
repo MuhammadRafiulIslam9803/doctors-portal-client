@@ -43,7 +43,7 @@ const Registration = () => {
                             className="input rounded-lg input-bordered w-full max-w-xs mb-5" />
                         {errors.password && <p className='text-red-600'>{errors.password?.message}</p>}
                     </div>
-                    <input className='btn btn-neutral rounded-lg w-full' value="Sign up" type="submit" />
+                    <input className='btn btn-neutral rounded-lg w-full text-xl' value="Sign up" type="submit" />
                     {/* <div>
                         {loginError && <p className='text-red-600'>{loginError}</p>}
                     </div> */}
