@@ -1,7 +1,11 @@
 import { format } from 'date-fns';
-import React from 'react';
+import React, { useContext } from 'react';
+import { AuthContext } from '../Authontication/AuthProvider';
+import toast from 'react-hot-toast';
 
-const ServiceOption = ({ singleService ,setSingleService, selected }) => {
+const ServiceOption = ({ singleService ,setSingleService, selected, refetch }) => {
+    const {user} = useContext(AuthContext)
+
     const { name, slots } = singleService;
     const date = format(selected, 'PP');
 
@@ -9,23 +13,37 @@ const ServiceOption = ({ singleService ,setSingleService, selected }) => {
         event.preventDefault();
         const form = event.target;
         const slot = form.slot.value;
-        const name = form.name.value;
+        const petientName = form.name.value;
         const email = form.email.value;
         const phone = form.phone.value;
         // [3, 4, 5].map((value, i) => console.log(value))
         const booking = {
             appointmentDate: date,
             treatment: name,
-            patient: name,
+            patient: petientName,
             slot,
             email,
             phone,
         }
 
-        // TODO: send data to the server
-        // and once data is saved then close the modal 
-        // and display success toast
-        console.log(booking);
+        fetch('http://localhost:5000/bookings',{
+            method : 'POST',
+            headers : {
+                "Content-Type" : "application/json"
+            },
+            body : JSON.stringify(booking)
+        })
+        .then(res=> res.json())
+        .then(data =>{
+            if (data.acknowledged){
+                toast.success(`${name} Booking Confirmed`)
+                refetch()
+            }
+            else{
+                toast.error(data.message);
+            }
+        })
+        // console.log(booking);
         // setSingleService(null);
     }
     return (
@@ -48,8 +66,12 @@ const ServiceOption = ({ singleService ,setSingleService, selected }) => {
                                 >{slot}</option>)
                             }
                         </select>
-                        <input name="name" type="text" placeholder="Your Name" className="input w-full input-bordered input-accent" />
-                        <input name="email" type="email" placeholder="Email Address" className="input w-full input-bordered input-accent" />
+                        {
+                            user?.uid && <>
+                            <input name="name" type="text" disabled defaultValue={user.displayName} placeholder="Your Name" className="input w-full input-bordered input-accent" />
+                            <input name="email" type="email" disabled defaultValue={user.email} placeholder="Email Address" className="input w-full input-bordered input-accent" />
+                            </>
+                        }
                         <input name="phone" type="text" placeholder="Phone Number" className="input w-full input-bordered input-accent" />
                         <br />
                         <input className='btn btn-accent rounded-lg text-white text-xl w-full' type="submit" value="Submit" />
