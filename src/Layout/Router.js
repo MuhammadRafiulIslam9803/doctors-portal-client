@@ -4,7 +4,12 @@ import Banner from "../Pages/Home/Banner";
 import BookingHome from "../Pages/Booking/BookingHome";
 import Login from "../Pages/Authontication/Login";
 import Registration from "../Pages/Authontication/Registration";
-import DashboardHome from "../Pages/Dashboard/DashboardHome";
+// import DashboardHome from "../Pages/Dashboard/DashboardHome";
+import PrivateRouter from "../Pages/Authontication/PrivateRouter"
+import DashboardLayout from "../Layout/DashboardLayout"
+import MyAppointment from "../Pages/Dashboard/MyAppointment";
+import AllUsers from "../Pages/Dashboard/AllUsers";
+import AdminRoute from "../Pages/Authontication/AdminRoute";
 
 const router = createBrowserRouter([
     {
@@ -32,7 +37,17 @@ const router = createBrowserRouter([
     },
     {  
          path :"/dashboard",
-         element : <DashboardHome></DashboardHome>
+         element : <PrivateRouter><DashboardLayout></DashboardLayout></PrivateRouter>,
+         children:[
+            {
+               path : "/dashboard",
+               element : <MyAppointment></MyAppointment>
+            },
+            {
+               path : "/dashboard/allusers",
+               element : <AdminRoute><AllUsers></AllUsers></AdminRoute>
+            },
+         ]
     },
 ])
 export default router;
