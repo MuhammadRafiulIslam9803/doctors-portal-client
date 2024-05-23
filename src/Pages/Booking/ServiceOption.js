@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 const ServiceOption = ({ singleService ,setSingleService, selected, refetch }) => {
     const {user} = useContext(AuthContext)
 
-    const { name, slots } = singleService;
+    const { name, slots ,price } = singleService;
     const date = format(selected, 'PP');
 
     const handleBookingInfo = event => {
@@ -24,6 +24,7 @@ const ServiceOption = ({ singleService ,setSingleService, selected, refetch }) =
             slot,
             email,
             phone,
+            price,
         }
 
         fetch('http://localhost:5000/bookings',{
