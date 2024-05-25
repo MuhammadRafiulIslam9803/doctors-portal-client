@@ -20,7 +20,7 @@ const AddDoctor = () => {
         }
     })
 
-    const handleAddDoctor = data =>{
+    const handleAddDoctor = data => {
         const image = data.image[0];
         const formData = new FormData();
         formData.append('image', image);
@@ -29,86 +29,102 @@ const AddDoctor = () => {
             method: 'POST',
             body: formData
         })
-        .then(res => res.json())
-        .then(imgData=>{
-            if(imgData.success){
-                console.log(imgData.data.url);
-                const doctor = {
-                    name: data.name, 
-                    email: data.email,
-                    specialty: data.specialty,
-                    image: imgData.data.url
+            .then(res => res.json())
+            .then(imgData => {
+                if (imgData.success) {
+                    console.log(imgData.data.url);
+                    const doctor = {
+                        name: data.name,
+                        email: data.email,
+                        specialty: data.specialty,
+                        image: imgData.data.url
+                    }
+
+                    fetch('http://localhost:5000/doctors', {
+                        method: 'POST',
+                        headers: {
+                            'content-type': 'application/json',
+                            authorization: `bearer ${localStorage.getItem('accessToken')}`
+                        },
+                        body: JSON.stringify(doctor)
+                    })
+                        .then(res => res.json())
+                        .then(result => {
+                            console.log(result);
+                            toast.success(`${data.name} is added successfully`);
+                            navigate('/dashboard/managedoctors')
+                        })
                 }
 
-                fetch('http://localhost:5000/doctors', {
-                    method: 'POST',
-                    headers: {
-                        'content-type': 'application/json', 
-                        authorization: `bearer ${localStorage.getItem('accessToken')}`
-                    },
-                    body: JSON.stringify(doctor)
-                })
-                .then(res => res.json())
-                .then(result=>{
-                    console.log(result);
-                    toast.success(`${data.name} is added successfully`);
-                    navigate('/dashboard/managedoctors')
-                })
-            }
 
-            
-        })
+            })
     }
 
-    if(isLoading){
+    if (isLoading) {
         return <div>loading ....</div>
     }
 
     return (
-        <div>
-            <div className='w-96 p-7'>
-                <h2 className="text-4xl">Add A Doctor</h2>
-                <form onSubmit={handleSubmit(handleAddDoctor)}>
-                    <div className="form-control w-full max-w-xs">
-                        <label className="label"> <span className="label-text">Name</span></label>
-                        <input type="text" {...register("name", {
-                            required: "Name is Required"
-                        })} className="input input-bordered rounded-lg w-full max-w-xs" />
-                        {errors.name && <p className='text-red-500'>{errors.name.message}</p>}
-                    </div>
-                    <div className="form-control w-full max-w-xs">
-                        <label className="label"> <span className="label-text">Email</span></label>
-                        <input type="email" {...register("email", {
-                            required: true
-                        })} className="input input-bordered rounded-lg w-full max-w-xs" />
-                        {errors.email && <p className='text-red-500'>{errors.email.message}</p>}
-                    </div>
-                    <div className="form-control w-full max-w-xs">
-                        <label className="label"> <span className="label-text">Specialty</span></label>
-                        <select
-                            {...register('specialty')}
-                            className="select input-bordered rounded-lg w-full max-w-xs">
-                            {
-                                specialties.map(specialty => <option
-                                    key={specialty._id}
-                                    value={specialty.name}
-                                >{specialty.name}</option>)
-                            }
-
-
-                        </select>
-                    </div>
-                    <div className="form-control w-full max-w-xs">
-                        <label className="label"> <span className="label-text">Photo</span></label>
-                        <input type="file" {...register("image", {
-                            required: "Photo is Required"
-                        })} className="input input-bordered rounded-lg w-full max-w-xs" />
-                        {errors.img && <p className='text-red-500'>{errors.img.message}</p>}
-                    </div>
-                    <input className='btn btn-primary rounded-lg w-full mt-4' value="Add Doctor" type="submit" />
-                </form>
+        <div className="flex justify-center items-center min-h-screen bg-gray-100">
+        <div className="w-full max-w-md p-8 bg-white shadow-lg rounded-lg">
+          <h2 className="text-2xl font-bold mb-6 text-center text-primary">Add A Doctor</h2>
+          <form onSubmit={handleSubmit(handleAddDoctor)}>
+            <div className="form-control w-full mb-4">
+              <label className="label">
+                <span className="label-text">Name</span>
+              </label>
+              <input
+                type="text"
+                {...register("name", { required: "Name is Required" })}
+                className="input input-bordered rounded-lg w-full"
+              />
+              {errors.name && <p className='text-red-500 text-sm mt-1'>{errors.name.message}</p>}
             </div>
+            <div className="form-control w-full mb-4">
+              <label className="label">
+                <span className="label-text">Email</span>
+              </label>
+              <input
+                type="email"
+                {...register("email", { required: true })}
+                className="input input-bordered rounded-lg w-full"
+              />
+              {errors.email && <p className='text-red-500 text-sm mt-1'>{errors.email.message}</p>}
+            </div>
+            <div className="form-control w-full mb-4">
+              <label className="label">
+                <span className="label-text">Specialty</span>
+              </label>
+              <select
+                {...register('specialty')}
+                className="select input-bordered rounded-lg w-full"
+              >
+                {specialties.map(specialty => (
+                  <option key={specialty._id} value={specialty.name}>
+                    {specialty.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="form-control w-full mb-4">
+              <label className="label">
+                <span className="label-text">Photo</span>
+              </label>
+              <input
+                type="file"
+                {...register("image", { required: "Photo is Required" })}
+                className="input input-bordered rounded-lg w-full"
+              />
+              {errors.img && <p className='text-red-500 text-sm mt-1'>{errors.img.message}</p>}
+            </div>
+            <input
+              className='btn btn-primary rounded-lg w-full mt-4'
+              value="Add Doctor"
+              type="submit"
+            />
+          </form>
         </div>
+      </div>
     );
 };
 

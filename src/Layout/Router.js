@@ -14,6 +14,8 @@ import AddDoctor from "../Pages/Dashboard/AddDoctor";
 import ManageDoctors from "../Pages/Dashboard/ManageDoctors";
 import Payment from "../Pages/Dashboard/Payment";
 import DisplayError from "../Pages/CommonComponent/DisplayError";
+import DoctorHome from "../Pages/SpeacialDoctor/DoctorHome";
+import DoctorsDetails from "../Pages/SpeacialDoctor/DoctorsDetails";
 
 const router = createBrowserRouter([
     {
@@ -36,6 +38,14 @@ const router = createBrowserRouter([
             {
                path :"/signup",
                element : <Registration></Registration> 
+            },
+            {
+               path :"/special",
+               element : <DoctorHome></DoctorHome> 
+            },
+            {
+               path :"/special/:id",
+               element : <DoctorsDetails></DoctorsDetails> 
             },
             
         ]

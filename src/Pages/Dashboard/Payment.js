@@ -10,17 +10,16 @@ const Payment = () => {
     const navigation = useNavigation();
     const { treatment, price, appointmentDate, slot } = booking;
     return (
-        <div>
-            <h3 className="text-3xl mb-2">Payment for {treatment}</h3>
-            <p className="text-xl">Please pay <strong>${price}</strong> for your appointment on {appointmentDate} at {slot}</p>
-            <div className='w-96 my-12'>
+        <div className="max-w-md mx-auto bg-gray-50 rounded-lg shadow-md p-8">
+            <h3 className="text-3xl font-semibold text-primary text-center mb-6">Payment Details</h3>
+            <p className="text-lg mb-6 text-center">Amount due: <strong className="text-teal-500">${price}</strong></p>
+            <div className="w-full max-w-xs mx-auto">
                 <Elements stripe={stripePromise}>
-                    <CheckOutForm
-                        booking={booking}
-                    />
+                    <CheckOutForm booking={booking} />
                 </Elements>
             </div>
         </div>
+
     );
 };
 

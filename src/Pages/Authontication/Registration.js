@@ -58,49 +58,61 @@ const Registration = () => {
 
 
     return (
-        <div className='h-[800px] flex justify-center items-center'>
-            <div className='w-96 p-7'>
-                <h2 className='text-xl text-neutral font-bold text-center'>Registration</h2>
-                <form onSubmit={handleSubmit(handleRegistration)}>
-                    <div className="form-control w-full max-w-xs">
-                        <label className="label"> <span className="label-text">Name</span></label>
-                        <input type="text" placeholder='Your Name'
+        <div className="registration-container flex justify-center items-center min-h-screen bg-gray-100">
+            <div className="registration-form w-96 p-7 bg-white shadow-lg rounded-lg">
+                <h2 className="text-2xl font-bold text-center text-neutral mb-6">Registration</h2>
+                <form onSubmit={handleSubmit(handleRegistration)} className="space-y-4">
+                    <div className="form-control">
+                        <label className="label">Name</label>
+                        <input
+                            type="text"
+                            placeholder="Your Name"
                             {...register("name", {
-                                required: "Name Address is required"
+                                required: "Name is required"
                             })}
-                            className="input rounded-lg input-bordered w-full max-w-xs" />
-                        {errors.name && <p className='text-red-600'>{errors.name?.message}</p>}
+                            className="input rounded-lg input-bordered w-full"
+                        />
+                        {errors.name && <p className="text-red-600">{errors.name.message}</p>}
                     </div>
-                    <div className="form-control w-full max-w-xs">
-                        <label className="label"> <span className="label-text">Email</span></label>
-                        <input type="email" placeholder='Your Email'
+                    <div className="form-control">
+                        <label className="label">Email</label>
+                        <input
+                            type="email"
+                            placeholder="Your Email"
                             {...register("email", {
                                 required: "Email Address is required"
                             })}
-                            className="input rounded-lg input-bordered w-full max-w-xs" />
-                        {errors.email && <p className='text-red-600'>{errors.email?.message}</p>}
+                            className="input rounded-lg input-bordered w-full"
+                        />
+                        {errors.email && <p className="text-red-600">{errors.email.message}</p>}
                     </div>
-                    <div className="form-control w-full max-w-xs">
-                        <label className="label"> <span className="label-text">Password</span></label>
-                        <input type="password" placeholder='Your Password'
+                    <div className="form-control">
+                        <label className="label">Password</label>
+                        <input
+                            type="password"
+                            placeholder="Your Password"
                             {...register("password", {
                                 required: "Password is required",
-                                minLength: { value: 6, message: 'Password must be 6 characters or longer' },
-                                pattern: { value: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])/, message: 'Password must have uppercase, number and special characters' }
+                                minLength: { value: 6, message: "Password must be 6 characters or longer" },
+                                pattern: { value: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])/, message: "Password must have uppercase, number and special characters" }
                             })}
-                            className="input rounded-lg input-bordered w-full max-w-xs mb-5" />
-                        {errors.password && <p className='text-red-600'>{errors.password?.message}</p>}
+                            className="input rounded-lg input-bordered w-full"
+                        />
+                        {errors.password && <p className="text-red-600">{errors.password.message}</p>}
                     </div>
-                    <input className='btn btn-neutral rounded-lg w-full text-xl' value="Sign up" type="submit" />
-                    <div>
-                        {signUpError && <p className='text-red-600'>{signUpError}</p>}
-                    </div>
+                    <input
+                        className="btn btn-neutral rounded-lg w-full text-xl"
+                        value="Sign up"
+                        type="submit"
+                    />
+                    {signUpError && <p className="text-red-600">{signUpError}</p>}
                 </form>
-                <p className='mt-1'>Alredy have an account ?<Link className='text-primary' to="/login">Login here </Link></p>
-                <div className="divider">OR</div>
-                <button className='btn btn-outline rounded-lg w-full'>CONTINUE WITH GOOGLE</button>
+                <p className="mt-4 text-center text-gray-800">
+                    Already have an account? <Link to="/login" className="text-primary">Login here</Link>
+                </p>
             </div>
         </div>
+
     );
 };
 
