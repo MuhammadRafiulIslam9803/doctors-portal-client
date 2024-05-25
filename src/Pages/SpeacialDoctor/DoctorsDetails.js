@@ -16,7 +16,7 @@ const DoctorsDetails = () => {
     const experience = ['15 years in Pediatrics.', 'Head of Pediatrics at XYZ Clinic.', 'Trained in advanced pediatric care.']
 
     if (!doctor) {
-        return <h2>Doctor not found</h2>;
+        return <h2>Doctor not found .</h2>;
     }
     const toggleAccordion = () => {
         setIsOpen(!isOpen);
