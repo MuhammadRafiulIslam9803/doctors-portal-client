@@ -79,7 +79,7 @@ const DoctorsDetails = () => {
                     </div>
                     <div className="text-center mt-8">
                         <button className="btn btn-primary" onClick={toggleAccordion}>
-                            {isOpen ? 'Close' : 'Open'} Your Meet Link 
+                            {isOpen ? 'Close' : 'Open'} Your Meet Link :
                         </button>
                     </div>
 
